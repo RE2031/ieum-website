@@ -81,46 +81,6 @@
     line-height: 1.5;
   }
 
-  /* 빠른 테스트 자동완성 바 */
-  .quick-demo-box{
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    border-radius: 10px;
-    padding: 10px 14px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .quick-demo-title{
-    font-size: .76rem;
-    font-weight: 700;
-    color: #475569;
-  }
-  .quick-demo-btns{
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .quick-btn{
-    background: #fff;
-    border: 1px solid #94a3b8;
-    color: #334155;
-    padding: 5px 9px;
-    border-radius: 6px;
-    font-size: .74rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all .15s ease;
-  }
-  .quick-btn:hover{
-    background: var(--blue-light);
-    border-color: var(--blue);
-    color: var(--blue-dark);
-  }
-
   /* 단계 인디케이터 (Step Progress) */
   .step-indicator{
     display: grid;
@@ -516,15 +476,6 @@
     비교와 경쟁 없는 따뜻한 육아 커뮤니티 자람새의 안심 회원가입입니다.
   </p>
 
-  <!-- ⚡ 1초 데모 자동완성 도구상자 -->
-  <div class="quick-demo-box">
-    <span class="quick-demo-title">⚡ 빠른 테스트용 1초 자동완성:</span>
-    <div class="quick-demo-btns">
-      <button type="button" class="quick-btn" onclick="quickFill('parent')">🌱 학부모 완성</button>
-      <button type="button" class="quick-btn" onclick="quickFill('teacher')">👩‍🏫 교사 완성</button>
-      <button type="button" class="quick-btn" onclick="quickFill('partner')">🤝 파트너 완성</button>
-    </div>
-  </div>
 
   <!-- 단계 인디케이터 (Step Indicator) -->
   <div class="step-indicator">
@@ -901,57 +852,6 @@
     const checks = document.querySelectorAll('.pledge-check');
     const allChecked = Array.from(checks).every(c => c.checked);
     document.getElementById('checkAll').checked = allChecked;
-  }
-
-  // ⚡ 데모용 원클릭 자동완성 (누르면 3단계까지 자동 채워 이동)
-  function quickFill(role) {
-    selectRole(role);
-    const idInput = document.getElementById('signupId');
-    const nameInput = document.getElementById('signupName');
-    const pwInput = document.getElementById('signupPw');
-    const pwcInput = document.getElementById('signupPwConfirm');
-
-    if (role === 'parent') {
-      idInput.value = 'minjun_mom';
-      nameInput.value = '김민준 엄마';
-    } else if (role === 'teacher') {
-      idInput.value = 'teacher01';
-      nameInput.value = '햇살반 박선생님';
-    } else if (role === 'partner') {
-      idInput.value = 'partner01';
-      nameInput.value = '(주)바른아이교구';
-    }
-    pwInput.value = '1234';
-    pwcInput.value = '1234';
-
-    // 3단계로 바로 이동
-    goToStep(3);
-
-    // 체크박스 모두 체크
-    document.getElementById('checkAll').checked = true;
-    toggleAllPledge(document.getElementById('checkAll'));
-
-    // 캔버스에 샘플 서명 드로잉
-    setTimeout(() => {
-      initCanvas();
-      const rect = canvas.getBoundingClientRect();
-      const w = rect.width || 520;
-      const h = rect.height || 130;
-
-      ctx.beginPath();
-      ctx.moveTo(w * 0.2, h * 0.6);
-      ctx.quadraticCurveTo(w * 0.35, h * 0.2, w * 0.5, h * 0.55);
-      ctx.quadraticCurveTo(w * 0.65, h * 0.9, w * 0.8, h * 0.4);
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(w * 0.3, h * 0.7);
-      ctx.lineTo(w * 0.75, h * 0.72);
-      ctx.stroke();
-
-      setSignedState(true);
-      hideError();
-    }, 100);
   }
 
   function showError(stepNum, msg) {
