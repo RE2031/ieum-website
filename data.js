@@ -288,7 +288,7 @@ function getPostById(id) {
   return loadPosts().find((p) => p.id === id) || null;
 }
 
-function addPost({ category, title, content, author, images }) {
+function addPost({ category, title, content, author, images, isAd, textAlign, photos }) {
   ensureSeeded();
   const posts = loadPosts();
   const post = {
@@ -298,7 +298,10 @@ function addPost({ category, title, content, author, images }) {
     content: content.trim(),
     author,
     date: new Date().toISOString(),
-    images: Number(images) || 0,
+    images: Number(images) || (photos ? photos.length : 0),
+    photos: photos || [],
+    textAlign: textAlign || 'center',
+    isAd: Boolean(isAd),
     likes: [],
     comments: [],
     reports: [],
