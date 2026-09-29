@@ -135,6 +135,14 @@
   </div>
 
   <div id="queueList"></div>
+
+  <div style="margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border);">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <h2 style="font-size:1.15rem; margin:0;">🛡️ 클린 안심 전자서약 접수 내역</h2>
+      <a href="compliance-signature.html" style="font-size:.82rem; color:var(--blue); font-weight:700; text-decoration:none;">새 서약서 작성하기 ↗</a>
+    </div>
+    <div id="pledgeList"></div>
+  </div>
 </div>
 
 <script src="data.js"></script>
@@ -185,7 +193,37 @@
     });
   }
 
+  function renderPledges() {
+    const listEl = document.getElementById('pledgeList');
+    if (!listEl) return;
+    const pledges = JSON.parse(localStorage.getItem('ieum_pledges') || '[]');
+    if (pledges.length === 0) {
+      listEl.innerHTML = `<div class="empty-state" style="padding:30px;">접수된 전자서약 내역이 없습니다. (새로운 파트너/관리자 서약 시 자동 등록)</div>`;
+      return;
+    }
+    listEl.innerHTML = pledges.map(pl => {
+      const typeLabel = pl.type === 'partner' ? '광고·제휴 파트너 안심 서약' : (pl.type === 'manager' ? '운영진 윤리 서약' : '일반 회원 서약');
+      const badgeColor = pl.type === 'partner' ? '#10b981' : (pl.type === 'manager' ? '#f59f00' : '#4c6ef5');
+      return `
+        <div class="queue-item" style="border-left: 4px solid ${badgeColor};">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-size:.74rem; font-weight:800; color:${badgeColor};">${typeLabel}</span>
+            <span style="font-size:.74rem; color:var(--text-sub);">${escapeHTML(pl.date || '')}</span>
+          </div>
+          <h3 style="margin:0 0 4px;">${escapeHTML(pl.name)} (${escapeHTML(pl.org)})</h3>
+          <div style="font-size:.78rem; color:#64748b; font-family:monospace; margin-top:4px;">
+            인증 해시: ${escapeHTML(pl.hash || '')}
+          </div>
+          <div style="font-size:.74rem; color:#059669; font-weight:700; margin-top:6px;">
+            ✓ 형법 제314조/350조 및 표시광고법 준수 서약 완료
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
   renderQueue();
+  renderPledges();
 </script>
 
 </body>
