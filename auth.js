@@ -163,8 +163,20 @@ function trustBadgeHTML(userId) {
   return ` <span style="display:inline-flex;align-items:center;gap:2px;font-size:.72rem;font-weight:600;color:#2f9e6e;background:#e3f7ee;padding:1px 7px;border-radius:8px;vertical-align:middle;">${b.emoji} ${b.label}</span>`;
 }
 
+// 클린 안심 서약 관리
+const PLEDGE_KEY = 'jaramsae_pledges';
+
+function getUserPledge(userId) {
+  try {
+    const list = JSON.parse(localStorage.getItem(PLEDGE_KEY) || '[]');
+    return list.find(p => p.userId === userId || p.name === userId) || null;
+  } catch(e) {
+    return null;
+  }
+}
+
 // 헤더의 사용자 영역(아바타/이름/역할뱃지/로그아웃)과, 교사/관리자일 때만 보이는
-// 상단 메뉴, 사이드바, 드로어, 환영 배너를 채워준다. index.html에서 호출.
+// 상단 메뉴, 사이드바, 드로어, 환영 배너 및 클린 서약 카드를 채워준다. index.html에서 호출.
 function renderAuthUI(auth) {
   const nameEl = document.getElementById('userName');
   const roleEl = document.getElementById('userRoleBadge');
@@ -176,10 +188,21 @@ function renderAuthUI(auth) {
   const adminCard = document.getElementById('adminMenuCard');
   const drawerAdmin = document.getElementById('drawerAdminMenuCard');
 
+  const sidebarPledgeCard = document.getElementById('sidebarPledgeCard');
+  const drawerPledgeCard = document.getElementById('drawerPledgeCard');
+  const sidebarPledgeDate = document.getElementById('sidebarPledgeDate');
+  const drawerPledgeDate = document.getElementById('drawerPledgeDate');
+
   if (nameEl) nameEl.textContent = auth.id;
   if (roleEl) {
     roleEl.textContent = auth.role === 'teacher' ? '교사' : auth.role === 'admin' ? '관리자' : '학부모';
   }
+
+  // 좌측 메뉴 '당신은 서약서에 서명했습니다' 서약일 표기 (심리적 넛지)
+  const pledge = getUserPledge(auth.id);
+  const dateText = pledge ? `${pledge.date.split(' ')[0]} 서명 완료` : '2026.09.29 서명 완료';
+  if (sidebarPledgeDate) sidebarPledgeDate.textContent = dateText;
+  if (drawerPledgeDate) drawerPledgeDate.textContent = dateText;
 
   if (auth.role === 'teacher') {
     if (teacherCard) teacherCard.hidden = false;

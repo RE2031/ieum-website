@@ -470,7 +470,10 @@
     document.title = `${post.title} · 자람새`;
     wrap.innerHTML = `
       <div class="post-card">
-        <span class="cat-tag">${escapeHTML(meta.label)}</span>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+          <span class="cat-tag">${escapeHTML(meta.label)}</span>
+          ${post.isAd ? `<span style="font-size:.74rem; background:#ffedd5; color:#c2410c; padding:3px 8px; border-radius:6px; font-weight:800; border:1px solid #fed7aa;">📢 안심 제휴·광고</span>` : ''}
+        </div>
         <h1>${escapeHTML(post.title)}</h1>
         <div class="post-meta">
           <div class="avatar"></div>
@@ -479,6 +482,15 @@
             <span>${formatDate(post.date)}</span>
           </div>
         </div>
+        ${post.isAd ? `
+          <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:10px; padding:10px 14px; margin: 12px 0 16px; font-size:.82rem; color:#9a3412; display:flex; align-items:center; gap:8px;">
+            <span style="font-size:1.1rem;">📢</span>
+            <div>
+              <strong>[표시광고법 준수 고지]</strong>
+              <span style="font-size:.78rem; color:#c2410c; margin-left:4px;">본 글은 작성자의 광고·협찬·제휴 정보가 포함되어 있으며, 자람새 안심 광고 가이드라인을 확인하고 등록되었습니다.</span>
+            </div>
+          </div>
+        ` : ''}
         ${galleryHTMLDetail(post.images, post.photos)}
         <div class="post-content">${escapeHTML(post.content)}</div>
         <div class="post-actions">

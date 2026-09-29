@@ -107,11 +107,49 @@
   .cancel-btn{ background: #f1f2f7; color: var(--text-sub); }
   .cancel-btn:hover{ background:#e7e8f0; }
 
-  @media (max-width: 480px){
-    header{ padding: 12px 16px; }
-    .wrap{ padding: 0 14px; }
-    .form-card{ padding: 24px 18px; }
+  /* 광고 감지 확인 모달 스타일 */
+  .ad-modal-backdrop{
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(2px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 1000; padding: 20px;
   }
+  .ad-modal-backdrop.active{ display: flex; }
+  .ad-modal-card{
+    background: #fff; width: 100%; max-width: 520px;
+    border-radius: 18px; box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    padding: 24px 26px; animation: modalPop .2s ease-out;
+  }
+  @keyframes modalPop{
+    from{ transform: scale(0.95); opacity: 0; }
+    to{ transform: scale(1); opacity: 1; }
+  }
+  .ad-notice-box{
+    background: #fff8eb; border: 1.5px solid #fed7aa; border-radius: 12px;
+    padding: 14px 16px; margin: 14px 0; font-size: .83rem; color: #431407; line-height: 1.55;
+  }
+  .ad-notice-list{ margin: 0; padding-left: 18px; }
+  .ad-notice-list li{ margin-bottom: 8px; }
+  .ad-notice-list strong{ color: #9a3412; }
+  .ad-agree-label{
+    display: flex; align-items: flex-start; gap: 8px; font-size: .83rem;
+    font-weight: 700; color: #1e293b; cursor: pointer; margin: 14px 0 18px;
+    padding: 10px 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;
+  }
+  .ad-agree-label input{ margin-top: 3px; flex: 0 0 auto; }
+  .ad-modal-actions{ display: flex; gap: 10px; }
+  .ad-btn-cancel{
+    flex: 1; padding: 12px; background: #f1f5f9; color: #475569;
+    border: none; border-radius: 10px; font-weight: 700; font-size: .88rem; cursor: pointer;
+  }
+  .ad-btn-cancel:hover{ background: #e2e8f0; }
+  .ad-btn-confirm{
+    flex: 1.4; padding: 12px; background: #ea580c; color: #fff;
+    border: none; border-radius: 10px; font-weight: 800; font-size: .88rem; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+  }
+  .ad-btn-confirm:hover{ background: #c2410c; }
+  .ad-btn-confirm:disabled{ background: #cbd5e1; cursor: not-allowed; box-shadow: none; color: #64748b; }
 </style>
 </head>
 <body>
@@ -163,6 +201,56 @@
   </div>
 </div>
 
+<!-- 광고 감지 시 준수 사항 확인 모달 -->
+<div class="ad-modal-backdrop" id="adModalBackdrop">
+  <div class="ad-modal-card">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+      <span style="font-size:1.6rem;">⚠️</span>
+      <div>
+        <h3 style="margin:0; font-size:1.15rem; font-weight:800; color:#c2410c;">이 글은 광고인 것 같습니다</h3>
+        <p style="margin:2px 0 0; font-size:.8rem; color:#78350f;">작성 내용 중 홍보·협찬·제휴 관련 워딩이 감지되었습니다.</p>
+      </div>
+    </div>
+
+    <p style="font-size:.88rem; color:#1e293b; margin:0 0 8px; line-height:1.5;">
+      <strong>만약에 광고라면 아래 사항들을 다시 확인해 주시길 바랍니다:</strong>
+    </p>
+
+    <div class="ad-notice-box">
+      <ul class="ad-notice-list">
+        <li>
+          <strong>1. [표시광고법 제3조 준수] 경제적 대가 표기 의무</strong><br>
+          금전, 제품, 원고료, 할인 등 대가를 지원받은 경우 본문에 <code>[협찬/유료광고 포함]</code> 문구를 반드시 명확히 기재해 주셔야 합니다. (미표기 시 표시광고법 위반 뒷광고 제재 대상)
+        </li>
+        <li>
+          <strong>2. [허위·과장 광고 배상 책임]</strong><br>
+          타인의 저작권 침해나 허위·과장 광고로 인해 발생하는 모든 민·형사상 법적 책임은 광고주 및 작성자 본인이 전적으로 부담합니다.
+        </li>
+        <li>
+          <strong>3. [소상공인 공식 반론·해명권 보장 (형법 314조 방지)]</strong><br>
+          특정 업체나 제품에 대한 평가가 포함될 경우, 해당 소상공인·원장님에게 100% 공식 반론 및 해명 댓글 권한이 보장됩니다.
+        </li>
+        <li>
+          <strong>4. [통신판매중개자 법적 면책 (전자상거래법 20조)]</strong><br>
+          자람새 커뮤니티는 통신판매중개자로서 회원 간 거래 및 제품 품질에 대해 일체의 법적 책임을 지지 않습니다.
+        </li>
+      </ul>
+    </div>
+
+    <label class="ad-agree-label">
+      <input type="checkbox" id="adConfirmCheck" onchange="toggleAdConfirmBtn()">
+      <span>위 광고 준수 사항들을 모두 확인하였으며, 법적 책임을 인지하고 이에 동의합니다. (필수)</span>
+    </label>
+
+    <div class="ad-modal-actions">
+      <button type="button" class="ad-btn-cancel" onclick="closeAdModal()">취소하고 글 수정하기</button>
+      <button type="button" class="ad-btn-confirm" id="adConfirmBtn" disabled onclick="confirmAndSubmitAdPost()">
+        확인 완료 및 글 올리기
+      </button>
+    </div>
+  </div>
+</div>
+
 <script src="data.js"></script>
 <script src="auth.js"></script>
 <script>
@@ -190,6 +278,25 @@
     document.getElementById('submitBtn').textContent = '질문 등록하기';
   }
 
+  // 광고 워딩 감지 패턴
+  const AD_KEYWORD_REGEX = /(광고|협찬|체험단|원고료|제휴|홍보|서포터즈|할인쿠폰|할인코드|공구|공동구매|마켓|스폰서)/i;
+  let isAdVerified = false;
+
+  function closeAdModal() {
+    document.getElementById('adModalBackdrop').classList.remove('active');
+  }
+
+  function toggleAdConfirmBtn() {
+    const checked = document.getElementById('adConfirmCheck').checked;
+    document.getElementById('adConfirmBtn').disabled = !checked;
+  }
+
+  function confirmAndSubmitAdPost() {
+    isAdVerified = true;
+    closeAdModal();
+    document.getElementById('writeForm').requestSubmit();
+  }
+
   document.getElementById('writeForm').addEventListener('submit', function (e) {
     e.preventDefault();
     const title = document.getElementById('titleInput').value.trim();
@@ -203,12 +310,26 @@
       return;
     }
 
+    // 광고/홍보 워딩 감지 시 팝업 모달 인터셉트
+    if (AD_KEYWORD_REGEX.test(title) || AD_KEYWORD_REGEX.test(content)) {
+      if (!isAdVerified) {
+        document.getElementById('adModalBackdrop').classList.add('active');
+        return;
+      }
+    }
+
+    let finalTitle = title;
+    if (isAdVerified && !finalTitle.includes('[안심광고]') && !finalTitle.includes('[광고]') && !finalTitle.includes('[협찬]')) {
+      finalTitle = `[안심제휴/광고] ${finalTitle}`;
+    }
+
     const post = addPost({
       category: cat,
-      title,
+      title: finalTitle,
       content,
       author: auth ? auth.id : '익명',
       images,
+      isAd: isAdVerified
     });
 
     location.href = `post.html?cat=${cat}&id=${post.id}`;
