@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>글쓰기 · 자람새</title>
+<style>
+  :root{
+    --bg: #eef1fb;
+    --card: #ffffff;
+    --blue: #6c8ef5;
+    --blue-dark: #5578e0;
+    --blue-light: #eaf0ff;
+    --text: #1f2430;
+    --text-sub: #8a8fa3;
+    --border: #edeff5;
+    --danger: #e0556c;
+  }
+  *{ box-sizing: border-box; }
+  [hidden]{ display:none !important; }
+  body{
+    margin:0;
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    background:#fff; padding: 14px 32px; border-bottom: 1px solid var(--border);
+    position: sticky; top:0; z-index: 10;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; font-size: 1.3rem; font-weight:700; text-decoration:none; color: inherit; }
+  .logo svg{ width:30px; height:30px; }
+  .back-link{ font-size: .85rem; color: var(--text-sub); text-decoration:none; }
+  .back-link:hover{ color: var(--text); }
+
+  .wrap{ max-width: 640px; margin: 32px auto; padding: 0 24px; }
+
+  .form-card{
+    background: var(--card);
+    border-radius: 18px;
+    padding: 30px 28px;
+    box-shadow: 0 1px 3px rgba(20,30,60,.04);
+  }
+  .form-card h1{ margin: 0 0 4px; font-size: 1.2rem; }
+  .form-card .cat-desc{ margin: 0 0 22px; font-size: .82rem; color: var(--text-sub); }
+
+  .principle-note{
+    display:flex;
+    gap:10px;
+    background: var(--blue-light);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    font-size: .8rem;
+    color: #4a5578;
+    line-height:1.6;
+  }
+  .principle-note svg{ width:18px; height:18px; stroke: var(--blue); flex: 0 0 auto; margin-top:1px; }
+  .principle-note a{ color: var(--blue-dark); font-weight:600; text-decoration:none; }
+  .principle-note a:hover{ text-decoration:underline; }
+
+  form{ display:flex; flex-direction:column; gap: 16px; }
+  label{ font-size: .84rem; font-weight:600; color:#454b5c; margin-bottom: -8px; }
+
+  input[type="text"], input[type="number"], textarea{
+    width:100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #f8f9fd;
+    font-size: .92rem;
+    color: var(--text);
+    outline: none;
+    font-family: inherit;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  textarea{ resize: vertical; min-height: 160px; line-height:1.6; }
+  input:focus, textarea:focus{ border-color: var(--blue); background: #fff; }
+
+  .img-count-row{ display:flex; align-items:center; gap:10px; }
+  .img-count-row label{ margin-bottom:0; white-space:nowrap; }
+  .img-count-row input{ width: 90px; }
+  .img-count-row .hint{ font-size: .76rem; color: var(--text-sub); }
+
+  .error-msg{
+    display:none; font-size: .8rem; color: var(--danger);
+    background: #fdecee; padding: 8px 12px; border-radius: 10px;
+  }
+  .error-msg.show{ display:block; }
+
+  .btn-row{ display:flex; gap:10px; margin-top:4px; }
+  button, .cancel-btn{
+    flex:1;
+    padding: 13px;
+    border-radius: 12px;
+    font-size: .95rem;
+    font-weight:700;
+    cursor:pointer;
+    border:none;
+    text-align:center;
+    text-decoration:none;
+  }
+  button[type="submit"]{ background: var(--blue); color:#fff; }
+  button[type="submit"]:hover{ background: var(--blue-dark); }
+  .cancel-btn{ background: #f1f2f7; color: var(--text-sub); }
+  .cancel-btn:hover{ background:#e7e8f0; }
+
+  @media (max-width: 480px){
+    header{ padding: 12px 16px; }
+    .wrap{ padding: 0 14px; }
+    .form-card{ padding: 24px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#6c8ef5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 8c0 3-2.5 4-5 4l-1 6h-3l-1-4c-3 0-6-2-6-6 0-1 .3-2 1-3 .5 1 1.5 1.5 2.5 1.5C8 4 10 3 12 3c1 0 2 .3 2.8.9C15.5 3.3 16.7 3 18 3c0 1.2-.4 2.2-1.2 3 1.4.5 2.2 1.2 3.2 2z"/>
+      <circle cx="16.5" cy="7.5" r=".6" fill="#6c8ef5"/>
+    </svg>
+    <span>자람새</span>
+  </a>
+  <a class="back-link" id="backLink" href="index.html">← 취소하고 돌아가기</a>
+</header>
+
+<div class="wrap">
+  <div class="form-card">
+    <h1 id="formTitle">글쓰기</h1>
+    <p class="cat-desc" id="formDesc"></p>
+
+    <div class="principle-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><circle cx="12" cy="16.5" r=".6" fill="currentColor" stroke="none"/><path d="M10.3 3.9 2.5 17.4a1.6 1.6 0 0 0 1.4 2.4h16.2a1.6 1.6 0 0 0 1.4-2.4L13.7 3.9a1.6 1.6 0 0 0-2.8 0z"/></svg>
+      <div>다른 아이와 비교·경쟁하는 글, 비전문가의 낙인성 진단, 특정 교사·기관을 향한 비방은 삼가주세요.
+        <a href="post.html?cat=guide&id=g2">커뮤니티 원칙 자세히 보기 →</a>
+      </div>
+    </div>
+
+    <form id="writeForm" novalidate>
+      <div class="error-msg" id="errorMsg"></div>
+
+      <label for="titleInput" id="titleLabel">제목</label>
+      <input type="text" id="titleInput" placeholder="제목을 입력하세요" maxlength="60">
+
+      <label for="contentInput" id="contentLabel">내용</label>
+      <textarea id="contentInput" placeholder="내용을 자세히 적어주세요"></textarea>
+
+      <div class="img-count-row" id="imgCountRow">
+        <label for="imgCountInput">사진 (데모용)</label>
+        <input type="number" id="imgCountInput" min="0" max="20" value="0">
+        <span class="hint">첨부할 사진 장수를 숫자로 입력하세요 (실제 업로드는 아직 미지원)</span>
+      </div>
+
+      <div class="btn-row">
+        <a class="cancel-btn" id="cancelBtn" href="index.html">취소</a>
+        <button type="submit" id="submitBtn">등록하기</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="auth.js"></script>
+<script>
+  const auth = requireAuth();
+
+  const params = new URLSearchParams(location.search);
+  const cat = CATEGORIES[params.get('cat')] ? params.get('cat') : 'story';
+  const meta = CATEGORIES[cat];
+  const backHref = cat === 'story' ? 'index.html' : `board.html?cat=${cat}`;
+
+  const isExpert = cat === 'expert';
+
+  document.title = `${isExpert ? '질문하기' : '글쓰기'} - ${meta.label} · 자람새`;
+  document.getElementById('formTitle').textContent = isExpert ? '전문가에게 질문하기' : `${meta.label} 글쓰기`;
+  document.getElementById('formDesc').textContent = meta.desc;
+  document.getElementById('backLink').href = backHref;
+  document.getElementById('cancelBtn').href = backHref;
+
+  if (isExpert) {
+    document.getElementById('titleLabel').textContent = '질문 제목';
+    document.getElementById('titleInput').placeholder = '어떤 것이 궁금하신가요? (예: 분리불안, 떼쓰기, 언어발달 관련 고민)';
+    document.getElementById('contentLabel').textContent = '질문 내용';
+    document.getElementById('contentInput').placeholder = '상황을 자세히 적어주실수록 전문가가 더 정확히 답변드릴 수 있어요.';
+    document.getElementById('imgCountRow').hidden = true;
+    document.getElementById('submitBtn').textContent = '질문 등록하기';
+  }
+
+  document.getElementById('writeForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const title = document.getElementById('titleInput').value.trim();
+    const content = document.getElementById('contentInput').value.trim();
+    const images = document.getElementById('imgCountInput').value;
+    const errorEl = document.getElementById('errorMsg');
+
+    if (!title || !content) {
+      errorEl.textContent = '제목과 내용을 모두 입력해주세요.';
+      errorEl.classList.add('show');
+      return;
+    }
+
+    const post = addPost({
+      category: cat,
+      title,
+      content,
+      author: auth ? auth.id : '익명',
+      images,
+    });
+
+    location.href = `post.html?cat=${cat}&id=${post.id}`;
+  });
+</script>
+
+</body>
+</html>
