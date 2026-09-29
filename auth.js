@@ -164,22 +164,32 @@ function trustBadgeHTML(userId) {
 }
 
 // 헤더의 사용자 영역(아바타/이름/역할뱃지/로그아웃)과, 교사/관리자일 때만 보이는
-// 사이드바 메뉴를 채워준다. index.html에서 호출.
+// 상단 메뉴, 사이드바, 드로어, 환영 배너를 채워준다. index.html에서 호출.
 function renderAuthUI(auth) {
   const nameEl = document.getElementById('userName');
   const roleEl = document.getElementById('userRoleBadge');
   const teacherCard = document.getElementById('teacherMenuCard');
+  const teacherSection = document.getElementById('teacherSidebarSection');
+  const drawerTeacher = document.getElementById('drawerTeacherMenuCard');
+  const topNavTeacher = document.getElementById('topNavTeacherLibrary');
+  const teacherBanner = document.getElementById('teacherWelcomeBanner');
   const adminCard = document.getElementById('adminMenuCard');
+  const drawerAdmin = document.getElementById('drawerAdminMenuCard');
 
   if (nameEl) nameEl.textContent = auth.id;
   if (roleEl) {
     roleEl.textContent = auth.role === 'teacher' ? '교사' : auth.role === 'admin' ? '관리자' : '학부모';
   }
 
-  if (auth.role === 'teacher' && teacherCard) {
-    teacherCard.hidden = false;
+  if (auth.role === 'teacher') {
+    if (teacherCard) teacherCard.hidden = false;
+    if (teacherSection) teacherSection.hidden = false;
+    if (drawerTeacher) drawerTeacher.hidden = false;
+    if (topNavTeacher) topNavTeacher.hidden = false;
+    if (teacherBanner) teacherBanner.hidden = false;
   }
-  if (auth.role === 'admin' && adminCard) {
-    adminCard.hidden = false;
+  if (auth.role === 'admin') {
+    if (adminCard) adminCard.hidden = false;
+    if (drawerAdmin) drawerAdmin.hidden = false;
   }
 }
