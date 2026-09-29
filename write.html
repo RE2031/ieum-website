@@ -8,9 +8,10 @@
   :root{
     --bg: #f4f6fa;
     --card: #ffffff;
-    --primary: #03c75a; /* 네이버 카페 시그니처 그린 */
-    --primary-hover: #02b350;
+    --primary: #5578e0; /* 자람새 시그니처 블루 */
+    --primary-hover: #4263eb;
     --blue: #5578e0;
+    --blue-dark: #4263eb;
     --blue-light: #eaf0ff;
     --text: #1f2430;
     --text-sub: #717684;
@@ -121,7 +122,7 @@
     font-weight: 800;
     cursor: pointer;
     transition: all .15s ease;
-    box-shadow: 0 2px 6px rgba(3, 199, 90, 0.25);
+    box-shadow: 0 2px 8px rgba(85, 120, 224, 0.28);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -129,7 +130,7 @@
   .top-publish-btn:hover{
     background: var(--primary-hover);
     transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(3, 199, 90, 0.35);
+    box-shadow: 0 4px 12px rgba(85, 120, 224, 0.38);
   }
 
   /* ---------- Centered Editor Container (중간 정렬 완벽 구현) ---------- */
@@ -179,16 +180,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
+    background: #f0f4ff;
+    border: 1px solid #c7d7fe;
     border-radius: var(--radius-md);
     padding: 11px 16px;
     margin-bottom: 22px;
     font-size: .82rem;
-    color: #166534;
+    color: #1e40af;
   }
   .community-motto-banner a{
-    color: #15803d;
+    color: #2563eb;
     font-weight: 700;
     text-decoration: underline;
   }
@@ -215,8 +216,8 @@
     transition: border-color .15s ease, box-shadow .15s ease;
   }
   .board-select:focus{
-    border-color: #03c75a;
-    box-shadow: 0 0 0 3px rgba(3, 199, 90, 0.12);
+    border-color: #5578e0;
+    box-shadow: 0 0 0 3px rgba(85, 120, 224, 0.15);
   }
   .board-hint{
     font-size: .8rem;
@@ -231,7 +232,7 @@
     transition: border-color .15s ease;
   }
   .title-input-wrapper:focus-within{
-    border-bottom-color: #03c75a;
+    border-bottom-color: #5578e0;
   }
   .editor-title-input{
     width: 100%;
@@ -304,9 +305,10 @@
 
   /* 정렬 전용 강조 버튼 스타일 */
   .align-btn.active{
-    background: #dcfce7;
-    color: #15803d;
+    background: #eaf0ff;
+    color: #3b5bdb;
     font-weight: 800;
+    border: 1px solid #c7d7fe;
   }
 
   /* 색상 선택기 미니 팝업/팔레트 */
@@ -562,13 +564,13 @@
     font-size: .95rem;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 3px 12px rgba(3, 199, 90, 0.28);
+    box-shadow: 0 3px 12px rgba(85, 120, 224, 0.28);
     transition: all .15s ease;
   }
   .btn-bottom-submit:hover{
     background: var(--primary-hover);
     transform: translateY(-1px);
-    box-shadow: 0 5px 16px rgba(3, 199, 90, 0.38);
+    box-shadow: 0 5px 16px rgba(85, 120, 224, 0.38);
   }
 
   /* 토스트 알림 메시지 */
@@ -677,9 +679,9 @@
 <header class="editor-header">
   <div class="header-left">
     <a class="logo" href="index.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#03c75a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#5578e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M20 8c0 3-2.5 4-5 4l-1 6h-3l-1-4c-3 0-6-2-6-6 0-1 .3-2 1-3 .5 1 1.5 1.5 2.5 1.5C8 4 10 3 12 3c1 0 2 .3 2.8.9C15.5 3.3 16.7 3 18 3c0 1.2-.4 2.2-1.2 3 1.4.5 2.2 1.2 3.2 2z"/>
-        <circle cx="16.5" cy="7.5" r=".6" fill="#03c75a"/>
+        <circle cx="16.5" cy="7.5" r=".6" fill="#5578e0"/>
       </svg>
       <span>자람새</span>
     </a>
@@ -722,7 +724,7 @@
     <div class="community-motto-banner">
       <div>
         <span>🌱 <strong>서로를 비교하지 않고, 아이의 속도를 존중하는 따뜻한 공간</strong></span>
-        <span style="display:inline-block; margin-left:6px; color:#15803d; font-size:.78rem;">(위장 뒷광고 및 비방글은 엄격히 제한됩니다)</span>
+        <span style="display:inline-block; margin-left:6px; color:#1e40af; font-size:.78rem;">(위장 뒷광고 및 비방글은 엄격히 제한됩니다)</span>
       </div>
       <a href="compliance-signature.html">[클린 안심 서약 확인]</a>
     </div>
@@ -840,7 +842,7 @@
       <div class="photo-section">
         <div class="photo-section-title">
           <strong>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#03c75a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#5578e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
               <circle cx="8.5" cy="8.5" r="1.5"/>
               <polyline points="21 15 16 10 5 21"/>
